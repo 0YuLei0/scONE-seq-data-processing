@@ -1,5 +1,5 @@
 # scONE-seq-data-processing
-This repository contains the neccessary scripts to process joint single-cell RNA and DNA libraries.
+This repository contains the neccessary scripts to process single-cell RNA and DNA libraries with scONE-seq.
 
 **RawDataProcessing:** this fold include the neccessary scripts to comnvert single cell data to matrix-format.
 
