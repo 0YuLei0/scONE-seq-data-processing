@@ -1,10 +1,14 @@
 # scONE-seq-data-processing
 This repository contains the neccessary scripts to process single-cell RNA and DNA libraries with scONE-seq.
 
-**RawDataProcessing:** this fold include the neccessary scripts to comnvert single cell data to matrix-format.
+**RawDataProcessing:** this folder includes the neccessary scripts to convet single cell DNA and RNA data to matrix-format data for down-stream analysis. In this section:
 
-**Barcodes:** this fold includes the cell indexs and DNA/RNA barcode used in scONE-seq.
+1. We QC fastq files and separate DNA/RNA reads.
+2. We next performed UMI deduplication. 
+3. The deduplicated reads could be mapped/quantified. 
 
-**DNA_related:** this fold include the **DNA** data analysis code.
+**Barcodes:** this folder includes the cell indexs and DNA/RNA barcode used in scONE-seq.
 
-**RNA_related:** this fold include the **RNA** data analysis code.
+**DNA_related:** this folder includes the **DNA** data analysis code.
+
+**RNA_related:** this folder includes the **RNA** data analysis code.
