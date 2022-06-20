@@ -5,6 +5,6 @@ This repository contains the neccessary scripts to process joint single-cell RNA
 
 **Barcodes:** this fold includes the cell indexs and DNA/RNA barcode used in scONE-seq.
 
-**DNA_related:** this fold incde the **DNA** data analysis code.
+**DNA_related:** this fold include the **DNA** data analysis code.
 
-**RNA_related:** this fold incde the **RNA** data analysis code.
+**RNA_related:** this fold include the **RNA** data analysis code.
