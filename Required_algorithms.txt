@@ -1,0 +1,14 @@
+fastp=0.20.1
+pigz=2.4
+cutadapt=2.10
+bbmap=38.86
+bwa=0.7.17
+samtools=1.7
+bedtools=2.29.2
+umi_tools=1.0.1
+star=2.7.5c
+kallisto=0.46.0
+salmon=1.8
+qualimap=2.2.2a
+seqkit=0.14.0
+seqtk=1.3
