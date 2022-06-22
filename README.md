@@ -24,7 +24,7 @@ nohup sh 3_DNA_UMI_mapping.sh $PATH/scONEseq &
 nohup sh 4_RNA_UMI_quantification.sh $PATH/scONEseq &
 ```
 
-**Barcodes:** this folder includes the cell indexs and DNA/RNA barcode used in scONE-seq.
+**Barcodes:** this folder includes DNA/RNA barcode used in scONE-seq.
 
 **DNA_related:** this folder includes the **DNA** data analysis code.
 
