@@ -12,7 +12,7 @@ conda install [Required_algorithms.txt]
 2. We next performed DNA UMI deduplication and alignment. (Use 2_DNA_BWA_mapping.sh and 3_DNA_UMI_mapping.sh)
 3. We next performed RNA UMI deduplication and quantification. (Use 4_RNA_UMI_quantification.sh)
 
-Breifly, once you have illumina/MGI sequencing data. You could simplily make a diretory, for example, let's name it **scONEseq**. Under this diretory, you should create new directory named **Raw**. Then, you can put your fastq files in this **Raw** folder. Before you run the **RawDataProcessing** scripts. Please remembmer to change reference, Barcodes, and scripts **PATH** accordingly. For the details about creating reference used in scONE-seq analysis, please check **DNA_related** and **RNA_related** sections.
+Breifly, once you have illumina/MGI sequencing data. You could simplily make a diretory, for example, let's name it **scONEseq**. Under this diretory, you should create new directory named **Raw**. Then, you can put your fastq files in this **Raw** folder. Before you run the **RawDataProcessing** scripts, please remembmer to change your Reference, Barcodes, and scripts **PATH** accordingly. For the details about creating reference used in scONE-seq analysis, please check **DNA_related** and **RNA_related** sections.
 
 ```
 ## Directly run the scONE-seq pipline.
