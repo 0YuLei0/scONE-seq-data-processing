@@ -54,3 +54,11 @@ chisel_prep -r $PATH_to_your_hg38 -j 20 --seed 24 [all your single cell bam file
 chisel -t barcodedcells.bam -n normal.bam -r $PATH_to_your_hg38 -l hg38_phased_snps.tsv
 ```
 ## Interge CNV calculation (combining counts and allele freguency)
+In this part, we tried to caculated the interge CNVs considering the allele freguency infromation infered from CHISEL. This could be especially useful when working with tumor cells which have 1/3 allele freguency. 
+```
+combo1 <- read.delim("D:/YULei/Data/GBM Part/Analyze/Chisel/AllCells/Run1/combo/combo.tsv",header = F) ## all cells 1
+cellid1 <- read.delim("D:/YULei/Data/GBM Part/Analyze/Chisel/AllCells/Run1/barcodedcells.info.tsv") ## all cells 1
+colnames(combo1) <- c("CHR","START","END","BARCODE","N_reads","Bin_reads","RDR","A_counts","B_Counts","BAF")
+chisel_run1 <- extract_bafANDrdr(combo1,cellid1,cellid_trim = 10)
+
+```
