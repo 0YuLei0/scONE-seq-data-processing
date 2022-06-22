@@ -22,7 +22,15 @@ ls | grep .bed.gz$ > list
 nohup bash $Ginkgo/scripts/analyze.sh $Ginkgo/uploads/sconeseq &
 ```
 ## Interge CNV calculation (counts-based)
-
+The normlized counts data from Ginkgo stored in **SegNorm** file in $Ginkgo/uploads/sconeseq. We then used R:copynumber and R:aCGH to peform segmentation.
+```
+# In R
+source(mergeLevels_multi_segmentation.R)
+source(process_segnorm.R)
+process_segnorm($PATH_to_SegNorm)
+```
+This function output a list object with Segmentation result and CNV result (assuming ploidy to be 2).
+Segmentation result is also a list object, which contains Segmentation result from "copynumber" and mergeLevels result from "aCGH".
 ## Get bin-level allele freguency with CHISEL
 We used CHISEL to get scDNA allele frequency information (https://github.com/raphael-group/chisel). 
 1. With counts-based CNVs, we could distinguish normal cells and malignent cells.
