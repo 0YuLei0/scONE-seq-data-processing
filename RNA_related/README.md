@@ -40,7 +40,7 @@ tx2gene <- read.delim("gcv34.eisaR_seperate.tx2gene.tsv",as.is = T,header = F)
 cg <- read.delim("gcv34.eisaR_seperate.intron2exon.tsv",header = T, as.is = TRUE)
 havana <- read.csv("esemble2havana.csv", header = F)
 # path to quant files
-dir <- "d:/YULei/Data/GBM Part/Analyze/CleanRNA_Scount"
+dir <- "$PATH_to_your_salmon_result"
 samples<- as.data.frame(list.files(dir))
 files <- file.path(dir,samples[,1],"quant.sf")
 ## import data
