@@ -38,4 +38,9 @@ mergeLevels_multi_segmentation <- function(smoothed_cnv = smooth_cnv,
   output <- list(seg.data = seg.data, seg.ml.data = seg.ml.data)
   return(output)
 }
-
+library(preprocessCore)
+densMode <- function(x){
+  td <- density(x,bw = 0.001)
+  maxDens <- which.max(td$y)
+  td$x[maxDens]
+}
