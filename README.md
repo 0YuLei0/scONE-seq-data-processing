@@ -26,6 +26,6 @@ nohup sh 4_RNA_UMI_quantification.sh $PATH/scONEseq &
 
 **Barcodes:** this folder includes DNA/RNA barcode used in scONE-seq.
 
-**DNA_related:** this folder includes the **DNA** data analysis code.
+**DNA_related:** this folder includes the instruction to caculate interge CNVs from scONE-seq DNA data.
 
-**RNA_related:** this folder includes the **RNA** data analysis code.
+**RNA_related:** this folder includes the instruction to get preRNA(intron+exon) expression data from single nuclei RNA data.
