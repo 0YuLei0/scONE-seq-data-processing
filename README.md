@@ -4,7 +4,7 @@ This repository contains the neccessary scripts to process sequencing data from 
 ```
 conda create -n oneseq
 conda activate oneseq
-conda install [Required_algorithms.txt]
+conda install fastp=0.20.1 # Nessecceary packges are listed in 
 ```
 
 **RawDataProcessing:** this folder includes the neccessary scripts to QC and align/quantify single cell DNA and RNA data for downstream analysis.
