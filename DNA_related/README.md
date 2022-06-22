@@ -56,9 +56,17 @@ chisel -t barcodedcells.bam -n normal.bam -r $PATH_to_your_hg38 -l hg38_phased_s
 ## Interge CNV calculation (combining counts and allele freguency)
 In this part, we tried to caculated the interge CNVs considering the allele freguency infromation infered from CHISEL. This could be especially useful when working with tumor cells which have 1/3 allele freguency. 
 ```
-combo1 <- read.delim("D:/YULei/Data/GBM Part/Analyze/Chisel/AllCells/Run1/combo/combo.tsv",header = F) ## all cells 1
-cellid1 <- read.delim("D:/YULei/Data/GBM Part/Analyze/Chisel/AllCells/Run1/barcodedcells.info.tsv") ## all cells 1
-colnames(combo1) <- c("CHR","START","END","BARCODE","N_reads","Bin_reads","RDR","A_counts","B_Counts","BAF")
-chisel_run1 <- extract_bafANDrdr(combo1,cellid1,cellid_trim = 10)
-
+## Import BAF data from CHISEL result, this data is located in combo/combo.tsv of the CHISEL result
+combo <- read.delim($PATH_to_combo.tsv,header = F)
+colnames(combo) <- c("CHR","START","END","BARCODE","N_reads","Bin_reads","RDR","A_counts","B_Counts","BAF")
+## Import Cellid, CHISEL made pseudo-cellid with chisel_prep, which generated a "barcodedcells.info.tsv" files
+cellid <- read.delim("$PATH_to_barcodedcells.info.tsv")
+## Convert this data to a matrix format
+source(inferCNV_with_BAF.R)
+chisel_run <- extract_bafANDrdr(combo, cellid, cellid_trim = 0)
+## convert chisel bins (5Mb) to ginkgo bins (500kb)
+Psuedo_mbaf <- chisel2ginkgo(ginkgo_bins = bin_anno, chisel_bins = chisel_run$annotation, mbaf = chisel_run$mbaf_mat)
+## 
+ginkgo_bafcnv <- baf_cnv_ginkgo(rdr = ginkgo_rdr, mbaf = ginkgo_mbaf, fixed_rdr = ginkgo_rdr_fixed,
+                                binclusters = ginkgo_rdr_seg, contral_baf = baf_distr, contral_rdr = rdr_distr)
 ```
