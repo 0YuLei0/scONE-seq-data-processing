@@ -1,7 +1,7 @@
 ## Genome reference
-We used gencode.v34 for RNA aligment and quantification.
-To perform snRNA-seq analysis, we followed the pipline from https://combine-lab.github.io/alevin-tutorial/2020/alevin-velocity/.
-We used the followed code to build salmon reference.
+We used gencode.v34 for RNA alignment and quantification.
+To perform snRNA-seq analysis, we followed the pipeline from https://combine-lab.github.io/alevin-tutorial/2020/alevin-velocity/.
+We used the followed code to build the salmon reference.
 ```
 # In R
 # use eisaR and "separate" stratedgy to extract the intron
