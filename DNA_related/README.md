@@ -1,7 +1,7 @@
 ## Genome reference
 We used hg38 suggested by http://lh3.github.io/2017/11/13/which-human-reference-genome-to-use
-## Get normlized counts from Ginkgo
-We used Ginkgo(https://github.com/robertaboukhalil/ginkgo) to normalize our scDNA data from scONE-seq. To use hg38 human reference, you should setup Ginkgo on your own server and build new genome reference for Ginkgo forllowing the instruction in (https://github.com/robertaboukhalil/ginkgo/tree/master/genomes/scripts).
+## Get normalized counts from Ginkgo
+We used Ginkgo(https://github.com/robertaboukhalil/ginkgo) to normalize our scDNA data from scONE-seq. To use hg38 human reference, you should setup Ginkgo on your own server and build a new genome reference for Ginkgo following the instruction in (https://github.com/robertaboukhalil/ginkgo/tree/master/genomes/scripts).
 Once you have Ginkgo installed, you could 
 1. Create a directory under the uploads directory in the ginkgo installation directory
 ```
@@ -31,10 +31,10 @@ process_segnorm($PATH_to_SegNorm)
 ```
 This function output a list object with Segmentation result and CNV result (assuming ploidy to be 2).
 Segmentation result is also a list object, which contains Segmentation result from "copynumber" and mergeLevels result from "aCGH".
-## Get bin-level allele freguency with CHISEL
+## Get bin-level allele frequency with CHISEL
 We used CHISEL to get scDNA allele frequency information (https://github.com/raphael-group/chisel). 
-1. With counts-based CNVs, we could distinguish normal cells and malignent cells.
-2. Prepare phased germline SNPs (normal cells were combined for germline SNPs calling). SNPs were identified with your favorate mutation caller (we simpliy used bcftools). Followed the instruction of CHISEL, these SNPs were phased with Michigan Imputation Server (https://imputationserver.sph.umich.edu/index.html#!pages/home).
+1. With counts-based CNVs, we could distinguish normal cells and malignant cells.
+2. Prepare phased germline SNPs (normal cells were combined for germline SNPs calling). SNPs were identified with your favorite mutation caller (we simply used bcftools). Followed the instruction of CHISEL, these SNPs were phased with Michigan Imputation Server (https://imputationserver.sph.umich.edu/index.html#!pages/home).
 ```
 ## From Michigan Imputation Server, you should get phased VCF fow each chromsome
 ## Filter and combine them
@@ -44,7 +44,7 @@ bcftools filter -i 'GT!="0|0"' $i | bcftools filter -i 'GT!="1|1"' -Ov | awk '{i
 done
 cat chr1_chisel.tsv chr2_chisel.tsv chr3_chisel.tsv chr4_chisel.tsv chr5_chisel.tsv chr6_chisel.tsv chr7_chisel.tsv chr8_chisel.tsv chr9_chisel.tsv chr10_chisel.tsv chr11_chisel.tsv chr12_chisel.tsv chr13_chisel.tsv chr14_chisel.tsv chr15_chisel.tsv chr16_chisel.tsv chr17_chisel.tsv chr18_chisel.tsv chr19_chisel.tsv chr20_chisel.tsv chr21_chisel.tsv chr22_chisel.tsv > hg38_phased_chisel.tsv
 ```
-3. Combine tumor cells togather.
+3. Combine tumor cells together.
 ```
 ## prepare barcode bam
 chisel_prep -r $PATH_to_your_hg38 -j 20 --seed 24 [all your single cell bam files]
@@ -53,8 +53,8 @@ chisel_prep -r $PATH_to_your_hg38 -j 20 --seed 24 [all your single cell bam file
 ```
 chisel -t barcodedcells.bam -n normal.bam -r $PATH_to_your_hg38 -l hg38_phased_snps.tsv
 ```
-## Interge CNV calculation (combining counts and allele freguency)
-In this part, we tried to caculated the interge CNVs considering the allele freguency infromation infered from CHISEL. This could be especially useful when working with tumor cells which have 1/3 allele freguency. 
+## Interge CNV calculation (combining counts and allele frequency)
+In this part, we tried to calculate the integer CNVs considering the allele frequency information inferred from CHISEL. This could be especially useful when working with tumor cells that have 1/3 allele frequency. 
 ```
 ## Import BAF data from CHISEL result, this data is located in combo/combo.tsv of the CHISEL result
 combo <- read.delim($PATH_to_combo.tsv,header = F)
