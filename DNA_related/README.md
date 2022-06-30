@@ -66,8 +66,8 @@ source(inferCNV_with_BAF.R)
 chisel_run <- extract_bafANDrdr(combo, cellid, cellid_trim = 0)
 ## convert chisel bins (5Mb) to ginkgo bins (500kb)
 Psuedo_mbaf <- chisel2ginkgo(ginkgo_bins = bin_anno, chisel_bins = chisel_run$annotation, mbaf = chisel_run$mbaf_mat)
-## Only works for WGD samples currently
-## For diplody or even higher copy number samples, this code will need to be modified.
+## Only works for our tetraploid sample now.
+## For samples from other sources, this code needs to be modified.
 ## Calling interge CNV with BAF information
 ginkgo_bafcnv <- baf_cnv_ginkgo(rdr = ginkgo_rdr, mbaf = ginkgo_mbaf, fixed_rdr = ginkgo_rdr_fixed,
                                 binclusters = ginkgo_rdr_seg, contral_baf = baf_distr, contral_rdr = rdr_distr)
