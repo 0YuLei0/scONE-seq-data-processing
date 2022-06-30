@@ -51,10 +51,10 @@ chisel_prep -r $PATH_to_your_hg38 -j 20 --seed 24 [all your single cell bam file
 ```
 4. Run chisel main program
 ```
-chisel -t barcodedcells.bam -n normal.bam -r $PATH_to_your_hg38 -l hg38_phased_snps.tsv
+chisel -t barcodedcells.bam -n normal.bam -r $PATH_to_your_hg38 -l hg38_phased_chisel.tsv
 ```
 ## Interge CNV calculation (combining counts and allele frequency)
-In this part, we tried to calculate the integer CNVs considering the allele frequency information inferred from CHISEL. This could be especially useful when working with tumor cells that have 1/3 allele frequency. 
+In this part, we tried to calculate the integer CNVs considering the allele frequency information inferred from CHISEL. This step can help us to remove some miscalling in single cell data.
 ```
 ## Import BAF data from CHISEL result, this data is located in combo/combo.tsv of the CHISEL result
 combo <- read.delim($PATH_to_combo.tsv,header = F)
