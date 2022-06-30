@@ -27,7 +27,7 @@ The normlized counts data from Ginkgo stored in **SegNorm** file in $Ginkgo/uplo
 # In R
 source(mergeLevels_multi_segmentation.R)
 source(process_segnorm.R)
-process_segnorm($PATH_to_SegNorm)
+processed_counts_data <- process_segnorm($PATH_to_SegNorm)
 ```
 This function output a list object with Segmentation result and CNV result (assuming ploidy to be 2).
 Segmentation result is also a list object, which contains Segmentation result from "copynumber" and mergeLevels result from "aCGH".
@@ -38,7 +38,7 @@ We used CHISEL to get scDNA allele frequency information (https://github.com/rap
 ```
 ## From Michigan Imputation Server, you should get phased VCF fow each chromsome
 ## Filter and combine them
-for i in `ls *dose*`
+for i in `ls *.vcf`
 do
 bcftools filter -i 'GT!="0|0"' $i | bcftools filter -i 'GT!="1|1"' -Ov | awk '{if($0 !~ /^#/) print "chr"$0; else print $0}' | sed '/^#/d' | awk '{print $1,$2,$10}' | awk -F ":" '{print $1}' > ${i%.dose.vcf}_chisel.tsv
 done
@@ -56,19 +56,29 @@ chisel -t barcodedcells.bam -n normal.bam -r $PATH_to_your_hg38 -l hg38_phased_c
 ## Interge CNV calculation (combining counts and allele frequency)
 In this part, we tried to calculate the integer CNVs considering the allele frequency information inferred from CHISEL. This step can help us to remove some miscalling in single cell data.
 ```
+# Load required pakgages and 
+source(extract_baf_from_chisel.R)
+source(Transfer_CHISEL_mbaf_to_ginkgo.R)
+source(Calculate_integerCNV.R)
+library(GenomicRanges)
+library(IRanges)
+library(tibble)
 ## Import BAF data from CHISEL result, this data is located in combo/combo.tsv of the CHISEL result
 combo <- read.delim($PATH_to_combo.tsv,header = F)
 colnames(combo) <- c("CHR","START","END","BARCODE","N_reads","Bin_reads","RDR","A_counts","B_Counts","BAF")
 ## Import Cellid, CHISEL made pseudo-cellid with chisel_prep, which generated a "barcodedcells.info.tsv" files
 cellid <- read.delim("$PATH_to_barcodedcells.info.tsv")
 ## Convert this data to a matrix format
-source(inferCNV_with_BAF.R)
 chisel_run <- extract_bafANDrdr(combo, cellid, cellid_trim = 0)
 ## convert chisel bins (5Mb) to ginkgo bins (500kb)
-Psuedo_mbaf <- chisel2ginkgo(ginkgo_bins = bin_anno, chisel_bins = chisel_run$annotation, mbaf = chisel_run$mbaf_mat)
+ginkgo_mbaf <- chisel2ginkgo(ginkgo_bins = bin_anno, chisel_bins = chisel_run$annotation, mbaf = chisel_run$mbaf_mat)
 ## Only works for our tetraploid sample now.
 ## For samples from other sources, this code needs to be modified.
 ## Calling interge CNV with BAF information
-ginkgo_bafcnv <- baf_cnv_ginkgo(rdr = ginkgo_rdr, mbaf = ginkgo_mbaf, fixed_rdr = ginkgo_rdr_fixed,
-                                binclusters = ginkgo_rdr_seg, contral_baf = baf_distr, contral_rdr = rdr_distr)
+ginkgo_bafcnv <- baf_cnv_ginkgo(rdr = ginkgo_rdr, # normalized counts from Ginkgo
+                                mbaf = ginkgo_mbaf, # mbaf from CHISEL
+                                fixed_rdr = ginkgo_rdr_fixed, # Segmentation result from "processed_counts_data"
+                                contral_baf = baf_distr,
+                                contral_rdr = rdr_distr
+                                )
 ```
