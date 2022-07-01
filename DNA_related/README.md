@@ -74,11 +74,11 @@ chisel_run <- extract_bafANDrdr(combo, cellid, cellid_trim = 0)
 ginkgo_mbaf <- chisel2ginkgo(ginkgo_bins = bin_anno, chisel_bins = chisel_run$annotation, mbaf = chisel_run$mbaf_mat)
 ## Only works for our tetraploid sample now.
 ## For samples from other sources, this code needs to be modified.
-## Calling interge CNV with BAF information
+## Calling interge CNVs with BAF information
 ginkgo_bafcnv <- baf_cnv_ginkgo(rdr = ginkgo_rdr, # normalized counts from Ginkgo
                                 mbaf = ginkgo_mbaf, # mbaf from CHISEL
                                 fixed_rdr = ginkgo_rdr_fixed, # Segmentation result from "processed_counts_data"
-                                contral_baf = baf_distr,
-                                contral_rdr = rdr_distr
+                                contral_baf = baf_distr, # Median BAF across all normal cells
+                                contral_rdr = rdr_distr # Median counts across all normal cells
                                 )
 ```
